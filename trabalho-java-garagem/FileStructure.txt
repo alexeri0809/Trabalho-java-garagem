@@ -1,0 +1,12 @@
+trabalho-java-garagem
+└── demo
+    │── pom.xml
+    └── src
+        │── main
+        │   │── java
+        │   │   └── com
+        │   │       └── example
+        │   │           └── Main.java
+        │   └── resources
+        └── test
+            └── java
