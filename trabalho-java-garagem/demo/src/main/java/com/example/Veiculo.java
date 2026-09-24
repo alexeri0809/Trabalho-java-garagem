@@ -6,10 +6,12 @@ public abstract class Veiculo {
     protected String modelo;
 
     public Veiculo(String marca, String modelo) {
-        this.matricula = GeradorMatricula.gerar();
+        this.matricula = gerarMatricula();
         this.marca = marca;
         this.modelo = modelo;
     }
+
+    protected abstract String gerarMatricula();
 
     public String getMatricula() {
         return matricula;

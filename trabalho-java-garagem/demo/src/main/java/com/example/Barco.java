@@ -4,4 +4,9 @@ public class Barco extends Veiculo {
     public Barco(String marca, String modelo) {
         super(marca, modelo);
     }
+
+    @Override
+    protected String gerarMatricula() {
+        return MatriculaMaritima.gerar();
+    }
 }
