@@ -1,12 +1,67 @@
 trabalho-java-garagem
 └── demo
+    │── manuais
+    │   │── Manual_Tecnico.md
+    │   └── Manual_Utilizador.md
     │── pom.xml
-    └── src
-        │── main
-        │   │── java
-        │   │   └── com
-        │   │       └── example
-        │   │           └── Main.java
-        │   └── resources
-        └── test
-            └── java
+    │── src
+    │   │── main
+    │   │   │── java
+    │   │   │   └── com
+    │   │   │       └── example
+    │   │   │           │── fabrica
+    │   │   │           │   │── BarcoFactory.java
+    │   │   │           │   │── CarroFactory.java
+    │   │   │           │   │── MotaFactory.java
+    │   │   │           │   └── VeiculoFactory.java
+    │   │   │           │── facade
+    │   │   │           │   └── GaragemFacade.java
+    │   │   │           │── garagem
+    │   │   │           │   │── Garagem.java
+    │   │   │           │   │── GrupoVeiculos.java
+    │   │   │           │   └── IteradorGaragem.java
+    │   │   │           │── Main.java
+    │   │   │           │── matricula
+    │   │   │           │   │── EstrategiaMatricula.java
+    │   │   │           │   │── Matricula.java
+    │   │   │           │   │── MatriculaMaritima.java
+    │   │   │           │   └── MatriculaTerrestre.java
+    │   │   │           └── veiculo
+    │   │   │               │── Barco.java
+    │   │   │               │── Carro.java
+    │   │   │               │── ElementoGaragem.java
+    │   │   │               │── Mota.java
+    │   │   │               │── TipoVeiculo.java
+    │   │   │               └── Veiculo.java
+    │   │   └── resources
+    │   └── test
+    │       └── java
+    └── target
+        │── classes
+        │   └── com
+        │       └── example
+        │           │── fabrica
+        │           │   │── BarcoFactory.class
+        │           │   │── CarroFactory.class
+        │           │   │── MotaFactory.class
+        │           │   └── VeiculoFactory.class
+        │           │── facade
+        │           │   └── GaragemFacade.class
+        │           │── garagem
+        │           │   │── Garagem.class
+        │           │   │── GrupoVeiculos.class
+        │           │   └── IteradorGaragem.class
+        │           │── Main.class
+        │           │── matricula
+        │           │   │── EstrategiaMatricula.class
+        │           │   │── Matricula.class
+        │           │   │── MatriculaMaritima.class
+        │           │   └── MatriculaTerrestre.class
+        │           └── veiculo
+        │               │── Barco.class
+        │               │── Carro.class
+        │               │── ElementoGaragem.class
+        │               │── Mota.class
+        │               │── TipoVeiculo.class
+        │               └── Veiculo.class
+        └── test-classes
