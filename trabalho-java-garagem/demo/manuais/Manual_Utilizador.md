@@ -1,6 +1,6 @@
 # Manual do Utilizador — Programa Garagem
 
-> 📗 Este documento é o **Manual do Utilizador**, com instruções para usar o programa. Para detalhes técnicos (arquitetura, padrões de desenho, erros e soluções), consulta o [Manual Técnico](./Manual_Tecnico.md).
+> 📗 Este documento é o **Manual do Utilizador**, com instruções para usar o programa. Para detalhes técnicos (arquitetura, padrões de desenho, testes unitários, erros e soluções), consulta o [Manual Técnico](./Manual_Tecnico.md).
 
 ---
 
@@ -17,24 +17,59 @@ Cada veículo recebe automaticamente uma **matrícula aleatória** gerada pelo p
 
 ## 2. Antes de começar: preparar o computador
 
-É necessário ter o **Java (JDK)** instalado.
+É necessário ter o **Java (JDK)** e o **Maven** instalados. Se não tiveres acesso de administrador no computador, ambos podem ser instalados sem esse acesso, através de ficheiros `.zip`.
 
-1. Verifica se já o tens, abrindo o terminal e escrevendo:
+### Java (JDK)
+
+1. Verifica se já o tens:
    ```powershell
    javac -version
    ```
-2. Se aparecer um número de versão (ex: `javac 21.0.x`), está tudo pronto — passa para a secção 3.
-3. Se aparecer erro "não reconhecido", precisas de instalar o JDK. Se não tiveres acesso de administrador no computador, descarrega a versão em **`.zip`** (não o instalador) em [adoptium.net](https://adoptium.net/temurin/releases/), extrai para uma pasta tua (ex: `C:\Users\<utilizador>\java\jdk-21`) e adiciona ao PATH do teu utilizador:
+2. Se aparecer erro "não reconhecido", descarrega a versão em **`.zip`** (não o instalador) em [adoptium.net](https://adoptium.net/temurin/releases/), extrai para uma pasta tua (ex: `C:\Users\<utilizador>\java\jdk-21`) e adiciona ao PATH do teu utilizador:
    ```powershell
    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Users\<utilizador>\java\jdk-21\bin", "User")
    ```
-   Depois fecha e abre um novo terminal.
+
+### Maven
+
+1. Verifica se já o tens:
+   ```powershell
+   mvn -version
+   ```
+2. Se aparecer erro "não reconhecido", descarrega o **Binary zip archive** em [maven.apache.org/download.cgi](https://maven.apache.org/download.cgi), extrai para uma pasta tua (ex: `C:\Users\<utilizador>\java\apache-maven-3.9.16`) e adiciona ao PATH do teu utilizador:
+   ```powershell
+   [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Users\<utilizador>\java\apache-maven-3.9.16\bin", "User")
+   ```
+
+**Importante:** depois de definires o PATH, **fecha o terminal completamente e abre um novo**. Se não quiseres fechar a janela, podes atualizar o PATH só na sessão atual com:
+```powershell
+$env:Path = [Environment]::GetEnvironmentVariable("Path", "User") + ";" + [Environment]::GetEnvironmentVariable("Path", "Machine")
+```
 
 ---
 
-## 3. Compilar e correr o programa
+## 3. Compilar, testar e correr o programa
 
 A partir da pasta `demo` do projeto (onde está o `pom.xml`):
+
+```powershell
+# Compilar
+mvn compile
+
+# Correr os testes unitários
+mvn test
+
+# Correr o programa (nota as aspas à volta do argumento inteiro)
+mvn compile exec:java "-Dexec.mainClass=com.example.Main"
+```
+
+Se tudo correr bem, `mvn test` deve terminar com `BUILD SUCCESS`, e a seguir aparece o menu principal ao correres o programa.
+
+**Atenção às aspas:** se escreveres `-Dexec.mainClass="com.example.Main"` (aspas só à volta do valor), o PowerShell pode partir o comando ao meio e dar erro. As aspas têm de envolver o argumento inteiro, como no exemplo acima.
+
+### Alternativa sem Maven
+
+Se preferires não usar o `exec:java`, ou este continuar a dar erro, podes compilar e correr o programa diretamente:
 
 ```powershell
 Remove-Item -Recurse -Force target\classes
@@ -42,7 +77,7 @@ javac -d target\classes -encoding UTF-8 (Get-ChildItem -Recurse -Filter *.java s
 java -cp target\classes com.example.Main
 ```
 
-Se tudo correr bem, aparece o menu principal.
+**Nota:** este método corre só o programa, não os testes unitários — para os testes continua a ser preciso usar `mvn test`.
 
 ---
 
@@ -115,8 +150,12 @@ Continua a ser possível usar as opções **4** (ver garagem), **5** (ver matrí
 
 | Sintoma | Solução |
 |---|---|
-| `javac`/`java` não reconhecido | Confirma que o JDK está instalado e no PATH (ver secção 2) |
-| Erro ao compilar com `*.java` | Confirma que copiaste o comando corretamente, incluindo todas as barras `\` |
-| Acentos aparecem trocados (ex: "Op??o" em vez de "Opção") | Usa sempre `-encoding UTF-8` ao compilar e `-Dfile.encoding=UTF-8` ao correr, como indicado na secção 3 |
+| `javac`/`java`/`mvn` não reconhecido | Confirma que o JDK e o Maven estão instalados e no PATH (ver secção 2); depois de alterares o PATH, abre sempre um terminal novo |
+| `winget install Apache.Maven` diz "No package found" | O Maven não está disponível pelo `winget` — usa a instalação manual em `.zip` (ver secção 2) |
+| `mvn compile exec:java ...` → `Unknown lifecycle phase ".mainClass=..."` | Problema de aspas do PowerShell a cortar o comando a meio | Envolve o argumento inteiro em aspas: `"-Dexec.mainClass=com.example.Main"`, ou usa a alternativa sem Maven (secção 3) |
+| Erro ao compilar com `*.java` | Usa `mvn compile` em vez de comandos `javac` manuais — o Maven trata disso automaticamente, incluindo ficheiros em subpastas |
+| `pom.xml` com erro / pasta com ícone vermelho | Confirma que todas as tags (`<dependency>`, `<plugin>`, etc.) estão **dentro** de `<project>...</project>`, nunca depois do `</project>` de fecho |
+| Acentos aparecem trocados (ex: "Op??o" em vez de "Opção") | Corre com `-Dfile.encoding=UTF-8`, ou adiciona `<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>` ao `pom.xml` |
+| `mvn test` mostra falhas | Confirma que os ficheiros de teste estão em `src/test/java/com/example/...`, com os mesmos subpacotes do código principal (`veiculo`, `matricula`, `garagem`, `fabrica`, `facade`) |
 
-Para mais detalhes técnicos sobre a arquitetura do programa, os padrões de desenho utilizados e o histórico de erros/soluções encontrados durante o desenvolvimento, consulta o **[Manual Técnico](./Manual_Tecnico.md)**.
+Para mais detalhes técnicos sobre a arquitetura do programa, os padrões de desenho utilizados, os testes unitários e o histórico completo de erros/soluções encontrados durante o desenvolvimento, consulta o **[Manual Técnico](./Manual_Tecnico.md)**.

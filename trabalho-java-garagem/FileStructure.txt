@@ -36,6 +36,17 @@ trabalho-java-garagem
     │   │   └── resources
     │   └── test
     │       └── java
+    │           └── com
+    │               └── example
+    │                   │── fabrica
+    │                   │   └── VeiculoFactoryTest.java
+    │                   │── facade
+    │                   │   └── GaragemFacadeTest.java
+    │                   │── garagem
+    │                   │   └── GaragemTest.java
+    │                   └── matricula
+    │                       │── MatriculaMaritimaTest.java
+    │                       └── MatriculaTerrestreTest.java
     └── target
         │── classes
         │   └── com
@@ -64,4 +75,40 @@ trabalho-java-garagem
         │               │── Mota.class
         │               │── TipoVeiculo.class
         │               └── Veiculo.class
+        │── generated-sources
+        │   └── annotations
+        │── generated-test-sources
+        │   └── test-annotations
+        │── maven-status
+        │   └── maven-compiler-plugin
+        │       │── compile
+        │       │   └── default-compile
+        │       │       │── createdFiles.lst
+        │       │       └── inputFiles.lst
+        │       └── testCompile
+        │           └── default-testCompile
+        │               │── createdFiles.lst
+        │               └── inputFiles.lst
+        │── surefire-reports
+        │   │── com.example.fabrica.VeiculoFactoryTest.txt
+        │   │── com.example.facade.GaragemFacadeTest.txt
+        │   │── com.example.garagem.GaragemTest.txt
+        │   │── com.example.matricula.MatriculaMaritimaTest.txt
+        │   │── com.example.matricula.MatriculaTerrestreTest.txt
+        │   │── TEST-com.example.fabrica.VeiculoFactoryTest.xml
+        │   │── TEST-com.example.facade.GaragemFacadeTest.xml
+        │   │── TEST-com.example.garagem.GaragemTest.xml
+        │   │── TEST-com.example.matricula.MatriculaMaritimaTest.xml
+        │   └── TEST-com.example.matricula.MatriculaTerrestreTest.xml
         └── test-classes
+            └── com
+                └── example
+                    │── fabrica
+                    │   └── VeiculoFactoryTest.class
+                    │── facade
+                    │   └── GaragemFacadeTest.class
+                    │── garagem
+                    │   └── GaragemTest.class
+                    └── matricula
+                        │── MatriculaMaritimaTest.class
+                        └── MatriculaTerrestreTest.class
